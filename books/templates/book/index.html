@@ -1,0 +1,31 @@
+{% extends 'book/base.html' %}
+
+{% block content %}
+<h1>Список книг</h1>
+
+<ul>
+    {% for p in books %}
+    <li>
+        <h2>{{p.title}}</h2>
+        {% autoescape on %}
+        <p>Автор книги - {{ p.author }}</p>
+        <p>Год публикации - {{ p.published_date|date:"Y" }}</p>
+        {% if request.user.is_authenticated %}
+        <p>{% if p.is_reserved %}
+                Зарезервирована!
+           {% else %}
+                Доступна для резервирования
+                <a href="{% url 'reservation_book' p.pk %}">Зарезервировать</a>
+           {% endif %}
+        {% endif %}
+        {% if request.user.is_superuser %}
+        </p>
+        <a href="{% url 'edit_book' p.pk %}">Редактировать книгу</a>
+        {% endif %}
+        {% endautoescape %}
+        <div class="clear"></div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

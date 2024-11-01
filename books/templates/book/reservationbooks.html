@@ -1,0 +1,21 @@
+{% extends 'book/base.html' %}
+
+{% block content %}
+<h2>Зарезервированные книги</h2>
+
+{% if reservations %}
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                <h3>{{ reservation.book.title }}</h3>
+                <p>Автор: {{ reservation.book.author }}</p>
+                <p>Дата резервирования: {{ reservation.reservation_date }}</p>
+                <p>Пользователь: {{ reservation.user }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>В данный момент нет зарезервированных книг.</p>
+{% endif %}
+
+{% endblock %}
